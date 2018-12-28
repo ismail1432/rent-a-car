@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Voitures disponibles à {{ app.request.get('name') }}</h1>
+
+    {% for car in cars %}
+        <li><h3 class="center-align"><a href="{{ path('show', {'id': car.id}) }}"> {{ car.model }}</a> <a href="{{ path('edit', {'id': car.id}) }}"> modifier</a></h3></li>
+    {% endfor %}
+{% endblock %}
