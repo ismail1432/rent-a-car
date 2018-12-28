@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<div class="container">
+    <div class="section">
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col m6 offset-m3">
+                {% if cars|length > 0 %}
+                <ul>
+                    <h1>{{ cars|length }} annonces </h1>
+                    {% for car in cars %}
+                        <li><h3 class="center-align"><a href="{{ path('show', {'id': car.id}) }}"> {{ car.model }}</a>
+                                <a href="{{ path("edit", {id : car.id}) }}" class="blue lighten-1 waves-effect waves-light btn"><i class="material-icons left">create</i>Editer</a>
+                                <a href="{{ path("delete", {id : car.id}) }}" class="red lighten-1 waves-effect waves-light btn"><i class="material-icons left">delete</i>Supprimer</a>
+                            </h3>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <h1>Aucune annonce</h1>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m6 offset-m3">
+                <a href="{{ path('add') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">add</i>Ajout</a>
+
+            </div>
+        </div>
+        <br><br>
+
+        <div class="section">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

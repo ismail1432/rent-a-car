@@ -1,0 +1,64 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="section no-pad-bot orange lighten-5" id="index-banner">
+        <div class="container">
+            <br><br>
+            <h1 class="header center orange-text text-darken-3">Rent Car</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">Location de Véhicule</h5>
+                <h2><i class="header center orange-text text-darken-3 material-icons">directions_car</i></h2>
+
+            </div>
+            <div class="row center">
+                {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('add') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">add</i>Ajout</a>
+                {% endif %}
+                <a href="{{ path('search_car') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">search</i>Recherche avancée</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">supervisor_account</i>Admin</a>
+                {% endif %}
+                {% if app.user is null %}
+                <a href="{{ path('registration') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">supervisor_account</i>Inscription</a>
+                <a href="{{ path('app_login') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">navigate_next</i>Connexion</a>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('logout') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">exit_to_app</i>Deconnexion</a>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('dashboard') }}" class="btn-large waves-effect waves-light orange darken-3"><i class="material-icons left">dvr</i>Dashboard</a>
+                {% endif %}
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="section">
+   <!--   Icon Section   -->
+            <div class="row">
+                <div class="col m6 offset-m3">
+                    <ul>
+                        <h1>Voitures disponibles :</h1>
+                        {% for car in cars %}
+                            <li>
+                                <h3><a href="{{ path('show', {'id': car.id}) }}"> {{ car.model }}</a></h3>
+                                        {% if is_granted('EDIT', car) %}
+                                            <a href="{{ path("edit", {id : car.id}) }}" class="blue lighten-1 waves-effect waves-light btn"><i class="material-icons left">create</i>Editer</a>
+                                        {% endif %}
+                                        {% if is_granted('DELETE', car) %}
+                                            <a href="{{ path("delete", {id : car.id}) }}" class="red lighten-1 waves-effect waves-light btn"><i class="material-icons left">delete</i>Supprimer</a>
+                                        {% endif %}
+                                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+        </div>
+        <br><br>
+
+        <div class="section">
+
+        </div>
+    </div>
+{% endblock %}

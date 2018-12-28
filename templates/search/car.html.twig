@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <div class="section">
+        <div class="row">
+            <div class="col m6 offset-m3">
+                <h1>Recherche avancée</h1>
+
+                {{ form(search_form) }}
+            </div>
+        </div>
+        {% if app.request.method == 'POST' %}
+        <div class="row">
+            <div class="col m6 offset-m3">
+                 {% if cars |length == 0 %}
+                <h1>Aucun résultat pour votre recherche</h1>
+                {% else %}
+                <h1>Resultats de la recherche</h1>
+                {% for car in cars %}
+                    <div>
+                        <h2>Modele : {{ car.model }}</h2>
+                        <h2>Prix : {{ car.price }}</h2>
+                        {% if car.image.name is defined %}
+                            <img src="{{ asset('images/')~car.image.name }}">
+                        {% else %}
+                            <p>Pas d'image</p>
+                        {% endif %}
+
+                        {% for keyword in car.keywords %}
+                            <p>{{ keyword.name }} {% if not loop.last %}, {% endif %}</p>
+                        {% endfor %}
+
+                        {% if car.cities |length > 0 %}
+                            <p>  Voiture disponibles à
+                                {% for city in car.cities %}<a class="btn waves-effect waves-light" >{{ city.name }}</a>{% endfor %}</p>
+                        {% endif %}
+
+                        <a href="{{ path("home") }}">Accueil</a>
+                    </div>
+                {% endfor %}
+
+                {% endif %}
+
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+<script>
+
+    $(document).ready(function() {
+        $('select').formSelect();
+
+    });
+    </script>
+{% endblock %}

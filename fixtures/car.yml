@@ -1,0 +1,24 @@
+App\Entity\Car:
+  car_{C5, X5, 508, BMW}:
+    model: '<current()>'
+    price: '<carPrice()>'
+    cities: ['@paris', '@lyon']
+    color:  '<carColor()>'
+    carburant: '<carCarburant()>'
+    user: '@admin'
+
+  car_{C4, Mercedes, Clio}:
+    model: '<current()>'
+    price: '<carPrice()>'
+    cities: ['@bordeaux', '@lille']
+    color:  '<carColor()>'
+    carburant: '<carCarburant()>'
+
+  car_{X6, 407, Twingo}:
+    model: '<current()>'
+    price: '<carPrice()>'
+    color:  '<carColor()>'
+    carburant: '<carCarburant()>'
+    cities: ['@marseille', '@lyon']
+
+

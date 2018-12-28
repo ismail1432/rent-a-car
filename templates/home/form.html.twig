@@ -1,0 +1,50 @@
+{{ form_start(form, {'attr' : {'novalidate' : 'novalidate'}}) }}
+<div class="input-field col s12">
+{{ form_label(form.model, 'Modèle :', {label_attr : {'class': 'form_model'}}) }}
+{{ form_widget(form.model) }}
+<span style="color: red"><strong>{{ form_errors(form.model) }}</strong></span>
+</div>
+<div class="input-field col s12">
+{{ form_label(form.price) }}
+{{ form_widget(form.price) }}
+<span style="color: red"><strong>{{ form_errors(form.price) }}</strong></span>
+</div>
+<div class="file-field input-field col s12">
+    {% if form.image.vars.value.id is defined and form.vars.value.id is not empty %}
+    <img src="{{ asset('images/')~form.image.vars.value.name }}" class="responsive-img">
+        <a
+           href="#" class="delete-image btn waves-effect waves-light red">Supprimer</a>
+    {% endif %}
+    <div class="btn">
+        <span>{{ (form.image.vars.value.name is defined) ? "Modifier l'" : "Ajouter une "}} image</span>
+        {{ form_row(form.image) }}
+    </div>
+    <div class="file-path-wrapper">
+        <input class="file-path validate" type="text">
+    </div>
+</div>
+<div class="input-field col s12">
+<button class="addKeyword btn waves-effect waves-light">Ajouter un mot clé ?</button>
+    <div class="error-delete-keyword" style="display: none">
+        <div class="card-panel">
+            <span class="red-text text-darken-2">Erreur lors de la suppréssion du mot clé</span>
+        </div>
+    </div>
+
+{{ form_widget(form.keywords) }}
+</div>
+<div class="input-field col s12">
+    {{ form_label(form.cities) }}
+    {{ form_widget(form.cities) }}
+    <span style="color: red"><strong>{{ form_errors(form.cities) }}</strong></span>
+</div>
+<div class="input-field col s12">
+    {{ form_label(form.color) }}
+    {{ form_widget(form.color) }}
+    <span style="color: red"><strong>{{ form_errors(form.color) }}</strong></span>
+</div>
+<div class="input-field col s12">
+    {{ form_label(form.carburant) }}
+    {{ form_widget(form.carburant) }}
+    <span style="color: red"><strong>{{ form_errors(form.carburant) }}</strong></span>
+</div>

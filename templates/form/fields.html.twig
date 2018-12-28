@@ -1,0 +1,15 @@
+{% block keyword_widget %}
+    {% spaceless %}
+        <div class="keywordArea">
+            {{ block('collection_widget') }}
+
+            {% if form.vars.value.id is defined %}
+            <a data-keyword-id="{{ form.vars.value.id }}"
+               data-delete-path="{{ path('delete_keyword', {id : form.vars.value.id}) }}"
+               href="#" class="delete-keyword btn waves-effect waves-light red">Supprimer</a>
+            {% endif %}
+        </div>
+
+    {% endspaceless %}
+
+{% endblock %}
