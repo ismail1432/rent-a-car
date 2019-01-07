@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<div class="container">
+    <div class="section">
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col m6 offset-m3">
+                <ul>
+                    <h1>Voitures disponibles :</h1>
+                    {% for car in cars %}
+                        <li><h3 class="center-align"><a href="{{ path('show', {'id': car.id}) }}"> {{ car.model }}</a>
+                            <a href="{{ path('edit', {'id': car.id}) }}"> modifier</a>
+                                <a href="{{ path('delete', {'id': car.id}) }}"> supprimer</a>
+                            </h3>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ path('add') }}">Ajouter</a>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="section">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -10,8 +10,23 @@
                 <h5 class="header col s12 light">Location de Véhicule</h5>
             </div>
             <div class="row center">
+                {% if is_granted('ROLE_USER') %}
                 <a href="{{ path('add') }}" class="btn-large waves-effect waves-light orange darken-3">Ajout</a>
+                {% endif %}
                 <a href="{{ path('search_car') }}" class="btn-large waves-effect waves-light orange darken-3">Recherche avancée</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin') }}" class="btn-large waves-effect waves-light orange darken-3">Admin</a>
+                {% endif %}
+                {% if app.user is null %}
+                <a href="{{ path('registration') }}" class="btn-large waves-effect waves-light orange darken-3">Inscription</a>
+                <a href="{{ path('app_login') }}" class="btn-large waves-effect waves-light orange darken-3">Connexion</a>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('logout') }}" class="btn-large waves-effect waves-light orange darken-3">Deconnexion</a>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('dashboard') }}" class="btn-large waves-effect waves-light orange darken-3">Dashboard</a>
+                {% endif %}
             </div>
             <br><br>
 
@@ -25,7 +40,10 @@
                     <ul>
                         <h1>Voitures disponibles :</h1>
                         {% for car in cars %}
-                            <li><h3 class="center-align"><a href="{{ path('show', {'id': car.id}) }}"> {{ car.model }}</a> <a href="{{ path('edit', {'id': car.id}) }}"> modifier</a></h3></li>
+                            <li><h3 class="center-align"><a href="{{ path('show', {'id': car.id}) }}"> {{ car.model }}</a>
+                                    {% if is_granted('EDIT', car) %}
+                                    <a href="{{ path('edit', {'id': car.id}) }}"> modifier</a></h3></li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>

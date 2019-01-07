@@ -38,7 +38,7 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="add")
+     * @Route("/car/add", name="add")
      */
     public function add(EntityManagerInterface $manager, Request $request, ImageHandler $handler)
     {
@@ -49,7 +49,9 @@ class IndexController extends AbstractController
 
             $path = $this->getParameter('kernel.project_dir') . '/public/images';
             $car = $form->getData();
+            $user = $this->getUser();
 
+            $car->setUser($user);
             /** @var Image $image */
             $image = $car->getImage();
 
@@ -72,10 +74,11 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="edit")
+     * @Route("/car/edit/{id}", name="edit")
      */
     public function edit(Car $car, EntityManagerInterface $manager, Request $request)
     {
+        $this->denyAccessUnlessGranted('EDIT', $car);
         $form = $this->createForm(CarType::class, $car);
 
         $form->handleRequest($request);
@@ -105,10 +108,12 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/delete/{id}", name="delete")
+     * @Route("/car/delete/{id}", name="delete")
      */
     public function delete(Car $car, EntityManagerInterface $manager)
     {
+        $this->denyAccessUnlessGranted('DELETE', $car);
+
         $manager->remove($car);
         $manager->flush();
 
