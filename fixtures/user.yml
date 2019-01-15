@@ -7,7 +7,7 @@ App\Entity\User:
 
   user:
     email: user@email.fr
-    roles: ['ROLE_ADMIN']
+    roles: ['ROLE_USER']
     password: '<encodePassword(user)>'
     enable: true
 

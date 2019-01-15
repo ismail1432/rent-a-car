@@ -5,19 +5,14 @@ namespace App\Controller;
 use App\Entity\Token;
 use App\Entity\User;
 use App\Form\RegistrationType;
-use App\Repository\TokenRepository;
 use App\Security\LoginFormAuthenticator;
 use App\Services\TokenSendler;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -40,15 +35,19 @@ class SecurityController extends AbstractController
      * @Route("/registration", name="registration")
      *
      */
-    public function registration(Request $request, EntityManagerInterface $manager, GuardAuthenticatorHandler $guardAuthenticatorHandler, LoginFormAuthenticator $loginFormAuthenticator,
-        UserPasswordEncoderInterface $passwordEncoder, TokenSendler $tokenSendler)
-    {
+    public function registration(
+        Request $request,
+        EntityManagerInterface $manager,
+        GuardAuthenticatorHandler $guardAuthenticatorHandler,
+        LoginFormAuthenticator $loginFormAuthenticator,
+        UserPasswordEncoderInterface $passwordEncoder,
+        TokenSendler $tokenSendler
+    ) {
         $user = new User;
 
         $form = $this->createForm(RegistrationType::class, $user);
 
-        if($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
-
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $passwordEncoded = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($passwordEncoded);
             $user->setRoles(['ROLE_ADMIN']);
@@ -65,7 +64,6 @@ class SecurityController extends AbstractController
             );
 
             return $this->redirectToRoute('home');
-
         }
 
         return $this->render('security/registration.html.twig', [
@@ -81,7 +79,7 @@ class SecurityController extends AbstractController
     {
         $user = $token->getUser();
 
-        if($user->getEnable()) {
+        if ($user->getEnable()) {
             $this->addFlash(
                 'notice',
                 "Ce token est déjà validé !"
@@ -90,10 +88,9 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($token->isValid()) {
-
-           $user->setEnable(true);
-           $manager->flush();
+        if ($token->isValid()) {
+            $user->setEnable(true);
+            $manager->flush();
 
             return $guardAuthenticatorHandler->authenticateUserAndHandleSuccess(
                 $user,

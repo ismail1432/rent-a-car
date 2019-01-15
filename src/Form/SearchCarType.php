@@ -3,7 +3,6 @@
 
 namespace App\Form;
 
-
 use App\Entity\City;
 use App\Faker\CarProvider;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

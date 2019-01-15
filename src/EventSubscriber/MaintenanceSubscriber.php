@@ -3,7 +3,6 @@
 
 namespace App\EventSubscriber;
 
-
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +22,7 @@ class MaintenanceSubscriber implements EventSubscriberInterface
     {
         $maintenance = false;
 
-        if($maintenance) {
+        if ($maintenance) {
             $content = $this->twig->render('maintenance/maintenance.html.twig');
 
             $response = new Response($content);
@@ -40,5 +39,4 @@ class MaintenanceSubscriber implements EventSubscriberInterface
           KernelEvents::RESPONSE => ['methodCalledOnKernelResponse', 255]
         ];
     }
-
 }

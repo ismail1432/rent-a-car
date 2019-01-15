@@ -155,11 +155,9 @@ class User implements UserInterface
 
     public function addCars($car): void
     {
-        if(!$this->cars->contains($car)) {
+        if (!$this->cars->contains($car)) {
             $this->cars->add($car);
             $car->setUser($this);
         }
     }
-
-
 }

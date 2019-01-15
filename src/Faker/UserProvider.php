@@ -3,7 +3,6 @@
 
 namespace App\Faker;
 
-
 use App\Entity\User;
 use Faker\Generator;
 use Faker\Provider\Base;

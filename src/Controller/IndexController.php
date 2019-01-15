@@ -3,23 +3,15 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Car;
-use App\Entity\City;
-use App\Entity\Image;
 use App\Entity\Keyword;
 use App\Form\CarType;
 use App\Repository\CarRepository;
-use App\Repository\CityRepository;
-use App\Repository\KeywordRepository;
 use App\Services\ImageHandler;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
@@ -47,8 +39,6 @@ class IndexController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
             $car = $form->getData();
             $user = $this->getUser();
 
@@ -113,7 +103,6 @@ class IndexController extends AbstractController
         $manager->flush();
 
         return $this->redirectToRoute('home');
-
     }
 
     /**

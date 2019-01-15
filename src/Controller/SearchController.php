@@ -3,7 +3,6 @@
 
 namespace App\Controller;
 
-
 use App\Form\SearchCarType;
 use App\Repository\CarRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +20,7 @@ class SearchController extends AbstractController
 
         $searchCarForm = $this->createForm(SearchCarType::class);
 
-        if($searchCarForm->handleRequest($request)->isSubmitted() && $searchCarForm->isValid()) {
+        if ($searchCarForm->handleRequest($request)->isSubmitted() && $searchCarForm->isValid()) {
             $criteria = $searchCarForm->getData();
 
             $cars = $carRepository->searchCar($criteria);

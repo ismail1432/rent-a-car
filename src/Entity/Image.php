@@ -69,11 +69,11 @@ class Image
      */
     public function handle()
     {
-        if($this->file === null) {
+        if ($this->file === null) {
             return;
         }
 
-        if($this->id) {
+        if ($this->id) {
             unlink($this->path.'/'.$this->name);
         }
 

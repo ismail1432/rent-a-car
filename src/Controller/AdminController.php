@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,7 +17,6 @@ class AdminController extends AbstractController
      */
     public function admin(UserRepository $userRepository)
     {
-
         return $this->render('admin/admin.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
@@ -42,6 +40,4 @@ class AdminController extends AbstractController
             'users' => $userRepository->findAll(),
         ]);
     }
-
-
 }

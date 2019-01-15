@@ -22,11 +22,11 @@ class CarVoter extends Voter
             return false;
         }
 
-        if($user->isAdmin()) {
+        if ($user->isAdmin()) {
             return true;
         }
 
-        if(null == $car->getUser()) {
+        if (null == $car->getUser()) {
             return false;
         }
 
@@ -41,7 +41,4 @@ class CarVoter extends Voter
 
         return false;
     }
-
-
-
 }

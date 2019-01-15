@@ -23,7 +23,7 @@ class CarRepository extends ServiceEntityRepository
     public function searchCar($criteria)
     {
         return $this->createQueryBuilder('c')
-            ->leftJoin('c.cities','city')
+            ->leftJoin('c.cities', 'city')
             ->where('city.name = :cityName')
             ->setParameter("cityName", $criteria['city']->getName())
             ->andWhere('c.color = :color')
@@ -37,7 +37,6 @@ class CarRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-
     }
 
 

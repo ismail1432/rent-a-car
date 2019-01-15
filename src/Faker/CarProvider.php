@@ -3,7 +3,6 @@
 
 namespace App\Faker;
 
-
 use Faker\Provider\Base;
 
 class CarProvider extends Base

@@ -191,6 +191,4 @@ class Car
     {
         $this->user = $user;
     }
-
-
 }

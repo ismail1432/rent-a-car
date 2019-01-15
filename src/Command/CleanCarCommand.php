@@ -40,8 +40,7 @@ class CleanCarCommand extends Command
 
         $output->writeln("<info>Il y a $total Voitures !</info>");
 
-        foreach ($cars as $car){
-
+        foreach ($cars as $car) {
             $model = $car->getModel();
 
             $output->writeln("<error>Suppression de $model</error>");
@@ -51,6 +50,5 @@ class CleanCarCommand extends Command
         $this->manager->flush();
 
         $output->writeln("<info>Les voitures ont bien étaient supprimées</info>");
-
     }
 }
