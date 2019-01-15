@@ -3,11 +3,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-    {% block title %}<title>Materialize Starter template</title>{% endblock %}
+    {% block title %}<title>Rent A Car</title>{% endblock %}
 
     {% block stylesheet %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="{{ asset("css/style.css") }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
@@ -19,7 +20,7 @@
 {% block nav %}
 <nav class="orange darken-2">
     <div class="nav-wrapper">
-        <a href="#!" class="brand-logo">We <3 Symfony !!</a>
+        <a href="{{ path('home') }}" class="brand-logo">We <3 Symfony !!</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
         <ul class="right hide-on-med-and-down">
             <li> <a href="{{ path("home") }}">Accueil</a></li>
@@ -43,7 +44,7 @@
 
     <div class="footer-copyright">
         <div class="container">
-            © {{ "now"|date('Y') }} Copyright Text
+            © {{ "now"|date('Y') }} Made With <3 by <a href="http://www.smaine.me">Eniams Dev</a>
         </div>
     </div>
 </footer>

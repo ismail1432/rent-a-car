@@ -7,15 +7,33 @@
         <div class="row">
             <div class="col m12">
             <h1>Admin page !</h1>
+                {% if users|length > 0 %}
+                    <h1>{{ users|length }} utilisateur </h1>
+                <table class="striped">
+                    <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
 
-                Liste des utilisateurs :
-                <ul>
+                    <tbody>
+
                     {% for user in users %}
-                        <li>{{ user.email }}</li>
+                        <tr>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.roles|join(', ') }}</td>
+                            <td>
+                                {% if app.user.id != user.id %}
+                                <a href="{{ path("delete_user", {id : user.id}) }}" class="red lighten-1 waves-effect waves-light btn"><i class="material-icons left">delete</i>Supprimer</a>
+                                {% endif %}
+                            </td>
+                        </tr>
                     {% endfor %}
-
-                </ul>
-
+                    </tbody>
+                </table>
+                {% endif %}
             </div>
         </div>
     </div>

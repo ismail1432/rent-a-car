@@ -1,10 +1,11 @@
 App\Entity\Car:
-  car_{C5, X5, 508}:
+  car_{C5, X5, 508, BMW}:
     model: '<current()>'
     price: '<carPrice()>'
     cities: ['@paris', '@lyon']
     color:  '<carColor()>'
     carburant: '<carCarburant()>'
+    user: '@admin'
 
   car_{C4, Mercedes, Clio}:
     model: '<current()>'

@@ -22,6 +22,10 @@ $(document).ready(function(){
 
     });
 
+    $('.delete-image').click(function (e) {
+        $('.responsive-img').remove();
+    });
+
     $('.delete-keyword').click(function (e) {
         var path = $(this).attr('data-delete-path');
         var keywordId = $(this).attr('data-keyword-id');

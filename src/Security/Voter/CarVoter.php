@@ -22,13 +22,17 @@ class CarVoter extends Voter
             return false;
         }
 
+        if($user->isAdmin()) {
+            return true;
+        }
+
         if(null == $car->getUser()) {
             return false;
         }
 
         switch ($attribute) {
             case 'EDIT':
-               return $car->getUser()->getId() == $user->getId();
+                return $car->getUser()->getId() == $user->getId();
                 break;
             case 'DELETE':
                 return $car->getUser()->getId() == $user->getId();

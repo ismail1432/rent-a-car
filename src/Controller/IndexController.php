@@ -26,7 +26,7 @@ class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @Template()
+     *
      */
     public function index(CarRepository $carRepository)
     {
@@ -42,20 +42,18 @@ class IndexController extends AbstractController
      */
     public function add(EntityManagerInterface $manager, Request $request, ImageHandler $handler)
     {
-        $form = $this->createForm(CarType::class);
+        $path = $this->getParameter('kernel.project_dir') . '/public/images';
+        $form = $this->createForm(CarType::class, null, ['path' => $path]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $path = $this->getParameter('kernel.project_dir') . '/public/images';
+
             $car = $form->getData();
             $user = $this->getUser();
 
             $car->setUser($user);
-            /** @var Image $image */
-            $image = $car->getImage();
 
-            $image->setPath($path);
             $manager->persist($car);
 
             $manager->flush();
@@ -78,17 +76,14 @@ class IndexController extends AbstractController
      */
     public function edit(Car $car, EntityManagerInterface $manager, Request $request)
     {
+        $path = $this->getParameter('kernel.project_dir') . '/public/images';
+        $form = $this->createForm(CarType::class, $car, ['path' => $path]);
         $this->denyAccessUnlessGranted('EDIT', $car);
-        $form = $this->createForm(CarType::class, $car);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $path = $this->getParameter('kernel.project_dir') . '/public/images';
-            /** @var Image $image */
-            $image = $form->getData()->getImage();
-
-            $image->setPath($path);
 
             $manager->flush();
             $this->addFlash(

@@ -57,7 +57,10 @@
                 return false;
             });
         }
-        
+        $('.delete-image').click(function (e) {
+            $('.responsive-img').remove()
+
+        });
         $('.delete-keyword').click(function (e) {
             e.preventDefault();
             var divKeywordArea = $(this).closest('.keywordArea');

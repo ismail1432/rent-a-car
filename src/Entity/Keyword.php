@@ -19,7 +19,6 @@ class Keyword
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message="Le mot clé ne peut être vide !")
      */
     private $name;
 

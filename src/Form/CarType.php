@@ -47,19 +47,33 @@ class CarType extends AbstractType
                 'by_reference' => false,
             ])
             ->add('cities', EntityType::class, [
-                'label' => false,
+                'label' => 'Ville',
                 'class' => City::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => false,
             ])
         ;
+
+        $builder->addEventListener(FormEvents::POST_SUBMIT,
+            function (FormEvent $event) use ($options) {
+
+            $car = $event->getData();
+
+            if (null === $car->getImage()->getFile()) {
+                $car->setImage(null);
+                return;
+            }
+            $image = $car->getImage();
+            $image->setPath($options['path']);
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Car::class,
+            'path' => null,
         ]);
     }
 }

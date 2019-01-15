@@ -10,8 +10,10 @@
 <span style="color: red"><strong>{{ form_errors(form.price) }}</strong></span>
 </div>
 <div class="file-field input-field col s12">
-    {% if form.image.vars.value.id is defined %}
+    {% if form.image.vars.value.id is defined and form.vars.value.id is not empty %}
     <img src="{{ asset('images/')~form.image.vars.value.name }}" class="responsive-img">
+        <a
+           href="#" class="delete-image btn waves-effect waves-light red">Supprimer</a>
     {% endif %}
     <div class="btn">
         <span>{{ (form.image.vars.value.name is defined) ? "Modifier l'" : "Ajouter une "}} image</span>
