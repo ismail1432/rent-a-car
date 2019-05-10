@@ -23,6 +23,8 @@ $(document).ready(function(){
     });
 
     $('.delete-image').click(function (e) {
+        // Modifie l'input hidden pour indiquer que l'utilisateur a cliqué sur supprimé
+        $('#car_deleteImage').val('deleteImage');
         $('.responsive-img').remove();
     });
 
