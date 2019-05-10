@@ -5,11 +5,14 @@ namespace App\Form;
 use App\Entity\Car;
 use App\Entity\Category;
 use App\Entity\City;
+use App\Entity\Image;
 use App\Faker\CarProvider;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +22,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CarType extends AbstractType
 {
+    public function __construct(EntityManagerInterface $manager)
+    {
+        $this->manager = $manager;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -52,6 +60,12 @@ class CarType extends AbstractType
                 'multiple' => true,
                 'expanded' => false,
             ])
+
+            // Input caché, Avec du JS on mettra sa valeur à 'deleteImage' si on clique sur supprimer
+            ->add('deleteImage', HiddenType::class, [
+                // option pour dire que le champs ne correspond pas a une propriété de l'entité
+                'mapped' => false
+            ])
         ;
 
         $builder->addEventListener(
@@ -59,10 +73,20 @@ class CarType extends AbstractType
             function (FormEvent $event) use ($options) {
                 $car = $event->getData();
 
-                if (null === $car->getImage()->getFile()) {
-                    $car->setImage(null);
-                    return;
-                }
+                // Récupère le fichier soumis, retourne null si aucun fichier n'est soumis
+                $submittedFile = $event->getForm()->get('image')->get('file')->getData();
+
+                 // la valeur doit être == 'deleteImage' si on a cliqué sur supprimer
+                 $hiddenInput = $event->getForm()->get('deleteImage')->getData();
+
+                 // Si on a cliqué sur supprimer ET si aucune image n'est soumise
+                 if ($hiddenInput == 'deleteImage' && $submittedFile == null) {
+                     // supprime l'image
+                     $this->deleteImage($event->getData()->getImage(), $options['path']);
+                     $car->setImage(null);
+                     return;
+                 }
+
                 $image = $car->getImage();
                 $image->setPath($options['path']);
             }
@@ -75,5 +99,12 @@ class CarType extends AbstractType
             'data_class' => Car::class,
             'path' => null,
         ]);
+    }
+
+    // Supprime l'image en base et surppime le fichier du serveur
+    private function deleteImage(Image $image, $projectDir)
+    {
+        unlink($projectDir.'/'.$image->getPath().'/'.$image->getName());
+        $this->manager->remove($image);
     }
 }
