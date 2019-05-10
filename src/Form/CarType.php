@@ -87,6 +87,12 @@ class CarType extends AbstractType
                      return;
                  }
 
+                 // Si aucune image n'est soumise on met l'objet $image a null
+                if($submittedFile == null) {
+                    $car->setImage(null);
+                    return;
+                }
+
                 $image = $car->getImage();
                 $image->setPath($options['path']);
             }
